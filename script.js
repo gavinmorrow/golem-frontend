@@ -84,7 +84,7 @@ function handleMessages(message) {
 		const msg = document.createElement("div");
 		msg.className = "message";
 		msg.innerHTML = `<span class="message-author">${message.author}</span>: ${message.content}`;
-		chat.appendChild(msg);
+		chat.prepend(msg);
 	}
 }
 
