@@ -26,9 +26,7 @@ ws.addEventListener("close", event => {
 function getMessages(ws) {
 	ws.send(
 		JSON.stringify({
-			LoadMessages: {
-				amount: 25,
-			},
+			LoadAllMessages: null,
 		})
 	);
 }
@@ -63,10 +61,31 @@ function handleAuthenticate(message) {
 
 function handleNewMessage(message) {
 	console.log("New message:", message.NewMessage);
+
+	message = message.NewMessage;
+
+	const chat = document.getElementById("chat");
+
+	const msg = document.createElement("div");
+	msg.className = "message";
+	msg.innerHTML = `<span class="message-author">${message.author}</span>: ${message.content}`;
+	chat.appendChild(msg);
 }
 
 function handleMessages(message) {
 	console.log("Messages:", message.Messages);
+
+	const messages = message.Messages;
+
+	// Add to DOM
+	const chat = document.getElementById("chat");
+
+	for (const message of messages) {
+		const msg = document.createElement("div");
+		msg.className = "message";
+		msg.innerHTML = `<span class="message-author">${message.author}</span>: ${message.content}`;
+		chat.appendChild(msg);
+	}
 }
 
 function handleError(message) {
